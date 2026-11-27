@@ -66,26 +66,6 @@ pipeline:
 
               echo \"=================================\""
           id: Deploy_application
-    - name: smoke-test
-      id: smoke_test
-      steps:
-        - name: smoke-test
-          run:
-            shell: bash
-            script: "echo \"Running Smoke Tests...\"\r
-
-              \r
-
-              echo \"Checking Application Health\"\r
-
-              \r
-
-              echo \"Application is UP\"\r
-
-              \r
-
-              echo \"Smoke Test Passed\""
-          id: smoke_test
     - name: QA-approval
       id: QA_approval
       steps:
