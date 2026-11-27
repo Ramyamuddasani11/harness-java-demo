@@ -52,11 +52,7 @@ pipeline:
         - name: Deploy-application
           run:
             shell: bash
-            script: "#!/bin/bash\r
-
-              set -x\r
-
-              echo \"=================================\"\r
+            script: "echo \"=================================\"\r
 
               echo \"DEPLOYING APPLICATION TO DEV\"\r
 
@@ -70,7 +66,7 @@ pipeline:
 
               echo \"=================================\"\r
 
-              exit 1"
+              exit 0"
           id: Deploy_application
     - name: QA-approval
       id: QA_approval
