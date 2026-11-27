@@ -64,7 +64,9 @@ pipeline:
 
               echo \"Application deployed to DEV\"\r
 
-              echo \"=================================\""
+              echo \"=================================\"\r
+
+              exit 0"
           id: Deploy_application
     - name: QA-approval
       id: QA_approval
