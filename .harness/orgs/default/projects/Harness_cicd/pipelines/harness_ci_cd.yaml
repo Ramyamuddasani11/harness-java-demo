@@ -1,0 +1,48 @@
+pipeline:
+  stages:
+    - id: Build
+      name: Build
+      clone:
+        enabled: true
+        ref:
+          type: branch
+          name: main
+        repo: Ramyamuddasani11/harness-java-demo
+        connector: second_connector
+      cache:
+        enabled: true
+      steps:
+        - id: Maven_build
+          name: Maven build
+          run:
+            shell: bash
+            script: mvn clean package
+            container:
+              image: maven:3.9.6-eclipse-temurin-17
+        - name: Run test
+          run-test:
+            shell: bash
+            script: mvn test
+            intelligence: { disabled: false }
+            container:
+              image: maven:3.9.6-eclipse-temurin-17
+          id: Run_test
+        - name: Package artifact
+          run:
+            shell: bash
+            script: mvn package
+            container:
+              image: maven:3.9.6-eclipse-temurin-17
+          id: Package_artifact
+        - name: Verify artifact
+          run:
+            shell: bash
+            script: "echo \"Artifacts generated\"\r
+
+              ls -la target"
+            container:
+              image: maven:3.9.6-eclipse-temurin-17
+          id: Verify_artifact
+      platform:
+        os: linux
+        arch: amd64
