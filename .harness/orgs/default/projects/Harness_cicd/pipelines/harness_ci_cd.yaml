@@ -46,3 +46,90 @@ pipeline:
       platform:
         os: linux
         arch: amd64
+    - name: Deploy_Dev
+      id: Deploy_Dev
+      steps:
+        - name: Deploy-application
+          run:
+            shell: bash
+            script: "echo \"=================================\"\r
+
+              echo \"DEPLOYING APPLICATION TO DEV\"\r
+
+              echo \"=================================\"\r
+
+              echo \"Application deployment started\"\r
+
+              echo \"Artifact received successfully\"\r
+
+              echo \"Application deployed to DEV\"\r
+
+              echo \"=================================\""
+          id: Deploy_application
+    - name: smoke-test
+      id: smoke_test
+      steps:
+        - name: smoke-test
+          run:
+            shell: bash
+            script: "echo \"Running Smoke Tests...\"\r
+
+              \r
+
+              echo \"Checking Application Health\"\r
+
+              \r
+
+              echo \"Application is UP\"\r
+
+              \r
+
+              echo \"Smoke Test Passed\""
+          id: smoke_test
+    - name: QA-approval
+      id: QA_approval
+      steps:
+        - name: QA-approval
+          approval:
+            with:
+              message: Approve deployment to QA environment
+              execution-details: true
+              auto-reject: false
+              user-groups:
+                - ramya
+              approvers-min-count: 1
+              block-executor: false
+              auto-approve: false
+              inputs: {}
+            uses: harness
+          id: QA_approval
+    - name: Deploy-QA
+      id: Deploy_QA
+      steps:
+        - name: Deploy_QA
+          run:
+            shell: bash
+            script: "echo \"=================================\"\r
+
+              echo \"DEPLOYING TO QA\"\r
+
+              echo \"=================================\"\r
+
+              \r
+
+              echo \"Application deployed successfully\"\r
+
+              \r
+
+              echo \"=================================\""
+          id: Deploy_QA
+    - name: QA-validation
+      id: QA_validation
+      steps:
+        - name: QA-validation
+          run:
+            shell: bash
+            script: "echo \"Running QA validation\"\r
+
+              echo \"Health check passed\""
+          id: QA_validation
